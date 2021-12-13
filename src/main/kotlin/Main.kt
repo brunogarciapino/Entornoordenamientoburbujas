@@ -1,18 +1,28 @@
 import java.util.*
-
-fun ordenarBurbuja(listaNumeros: List<Int>, listaNumerosOrdenada: List<Int>): List<Int>{
+val repeticiones: Int = 5
+fun ordenarBurbuja(listaNumeros: List<Int>): List<Int>{
 
     var contador1 = 0
     var contador2 = 1
 
-    while (listaNumeros != listaNumerosOrdenada)
+    while (listaNumeros != listaNumeros.sortedByDescending { it }.reversed() )
     {
         if (listaNumeros[contador1] > listaNumeros[contador2])
         {
             Collections.swap(listaNumeros,contador1,contador2)
             contador1++
             contador2++
-
+            when
+            {
+                contador2 == listaNumeros.size ->
+                {
+                    contador1 = 0
+                    contador2= 1 }
+            }
+        }
+        else{
+            contador1++
+            contador2++
             when
             {
                 contador2 == listaNumeros.size ->
@@ -22,38 +32,28 @@ fun ordenarBurbuja(listaNumeros: List<Int>, listaNumerosOrdenada: List<Int>): Li
             }
         }
     }
-
     return listaNumeros
-
 }
-
 
 
 fun main() {
 
     val listaNumeros = mutableListOf<Int>()
     var numeroInput: Int = 0
-    for (i in 1..10) {
-        println("Introduce un $i numero")
-        var valores = readLine()
-        numeroInput = try {
-            valores!!.toInt()
-        } catch (e: Exception) {
-            0
-        }
+
+
+    println("Introduce $repeticiones números")
+
+    repeat(repeticiones) {
+        numeroInput = readLine()?.toInt()!!
         listaNumeros.add(numeroInput)
     }
-    var listaNumerosOrdenada = listaNumeros
 
     println(listaNumeros)
 
-    listaNumerosOrdenada.sort()
-
     println("")
-    println("Ordenación según el método de ordenación burbuja")
+    println("Ordenado según el método de ordenación burbuja")
     println("")
 
-    println(ordenarBurbuja(listaNumeros, listaNumerosOrdenada))
-
-
+    println(ordenarBurbuja(listaNumeros))
 }
